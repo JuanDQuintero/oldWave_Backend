@@ -44,6 +44,13 @@ const getProduct = async (req, res) => {
     });
   }
 
+  const imgs = await connection.query('SELECT '
+    + 'id, src '
+    + 'FROM product_image '
+    + 'WHERE product_id = ?;', [id]);
+
+  product[0].imgs = imgs;
+
   res.json(product);
 };
 
