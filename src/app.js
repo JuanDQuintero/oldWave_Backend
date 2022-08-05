@@ -4,6 +4,7 @@ import config from './config';
 
 // Routes
 import productsRoutes from './routes/products.routes';
+import productRoutes from './routes/product.routes';
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.use(morgan('dev'));
 
 // Routes
 app.use('/api/products', productsRoutes);
+app.use('/api/product', productRoutes);
 
 export default app;
