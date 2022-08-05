@@ -31,11 +31,19 @@ const getProduct = async (req, res) => {
     + 'brand.name as brand , '
     + 'reseller.city as city,  '
     + 'reseller.name as reseller, '
+    + 'reseller.logo as reseller_logo, '
     + 'reseller.rating as reseller_rating '
     + 'FROM product INNER JOIN brand  '
     + 'ON product.brand_id = brand.id INNER JOIN '
     + 'reseller ON product.reseller_id = reseller.id '
     + 'WHERE product.id = ?;', [id]);
+
+  if (product.length === 0) {
+    res.json({
+      error: 'Product not found',
+    });
+  }
+
   res.json(product);
 };
 
