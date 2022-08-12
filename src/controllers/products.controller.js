@@ -1,6 +1,6 @@
 import getConnection from '../database/database';
 import {
-  GET_PRODUCT, GET_PRODUCTS, GET_PRODUCT_IMGS,
+  GET_PRODUCT, GET_PRODUCTS, GET_PRODUCT_IMGS, GET_PRODUCT_MATCHES,
 } from '../database/queries';
 
 const getProducts = async (req, res) => {
@@ -28,8 +28,16 @@ const getProduct = async (req, res) => {
   res.json(product);
 };
 
+const matchProduct = async (req, res) => {
+  const { query } = req.query;
+  const regex = `%${query}%`;
+  const connection = await getConnection();
+  const products = await connection.query(GET_PRODUCT_MATCHES, [regex, regex, regex, regex]);
+  res.json(products);
+};
+
 export default {
   getProducts,
   getProduct,
-
+  matchProduct,
 };
