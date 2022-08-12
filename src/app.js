@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import config from './config';
-
 // Routes
 import productsRoutes from './routes/products.routes';
 import productRoutes from './routes/product.routes';
@@ -9,11 +9,11 @@ import productRoutes from './routes/product.routes';
 const app = express();
 
 // settings
-app.set('port', config.port);
+app.set('port', config.port || 8080);
 
 // Middlewares
 app.use(morgan('dev'));
-
+app.use(cors({ origin: '*' }));
 // Routes
 app.use('/api/products', productsRoutes);
 app.use('/api/product', productRoutes);
