@@ -1,60 +1,43 @@
 import getConnection from '../database/database';
+import {
+  GET_PRODUCT, GET_PRODUCTS, GET_PRODUCT_IMGS, GET_PRODUCT_MATCHES,
+} from '../database/queries';
 
 const getProducts = async (req, res) => {
   const connection = await getConnection();
-  const products = await connection.query(
-    'SELECT  '
-    + 'product.id as id, '
-    + 'product.name as name, '
-    + 'product.description as description, '
-    + 'product.price as price, '
-    + 'product.thumbnail as thumbnail, '
-    + 'brand.name as brand , '
-    + 'reseller.city as city,  '
-    + 'reseller.name as reseller, '
-    + 'reseller.rating as reseller_rating '
-    + 'FROM product INNER JOIN brand  '
-    + 'ON product.brand_id = brand.id INNER JOIN '
-    + 'reseller ON product.reseller_id = reseller.id;',
-  );
+  const products = await connection.query(GET_PRODUCTS);
   res.json(products);
 };
 
 const getProduct = async (req, res) => {
   const { id } = req.params;
   const connection = await getConnection();
-  const product = await connection.query('SELECT  '
-    + 'product.id as id, '
-    + 'product.name as name, '
-    + 'product.description as description, '
-    + 'product.price as price, '
-    + 'brand.name as brand , '
-    + 'reseller.city as city,  '
-    + 'reseller.name as reseller, '
-    + 'reseller.logo as reseller_logo, '
-    + 'reseller.rating as reseller_rating '
-    + 'FROM product INNER JOIN brand  '
-    + 'ON product.brand_id = brand.id INNER JOIN '
-    + 'reseller ON product.reseller_id = reseller.id '
-    + 'WHERE product.id = ?;', [id]);
+  const product = await connection.query(GET_PRODUCT, [id]);
 
   if (product.length === 0) {
     res.json({
       error: 'Product not found',
     });
+    return;
   }
 
-  const imgs = await connection.query('SELECT '
-    + 'id, src '
-    + 'FROM product_image '
-    + 'WHERE product_id = ?;', [id]);
+  const imgs = await connection.query(GET_PRODUCT_IMGS, [id]);
 
   product[0].imgs = imgs;
 
   res.json(product);
 };
 
+const matchProduct = async (req, res) => {
+  const { query } = req.query;
+  const regex = `%${query}%`;
+  const connection = await getConnection();
+  const products = await connection.query(GET_PRODUCT_MATCHES, [regex, regex, regex, regex]);
+  res.json(products);
+};
+
 export default {
   getProducts,
   getProduct,
+  matchProduct,
 };
