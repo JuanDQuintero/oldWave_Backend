@@ -15,7 +15,7 @@ const getProduct = async (req, res) => {
   const product = await connection.query(GET_PRODUCT, [id]);
 
   if (product.length === 0) {
-    res.json({
+    res.status(404).json({
       error: 'Product not found',
     });
     return;
