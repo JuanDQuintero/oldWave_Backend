@@ -60,4 +60,6 @@ export const GET_USER = 'SELECT '
 + 'FROM users where users.idGoogle = ? or users.email = ?'
 
 
-export const CREATE_USER = 'INSERT INTO users (email, name, lastname, idGoogle) VALUES (?,?,?,?)'
+export const CREATE_USER = 'INSERT INTO users (email, name, lastname, idGoogle) VALUES (? ,? ,? ,? )'
+
+export const CREATE_ORDER = 'INSERT INTO orders (idUser, idProduct) VALUES (?,?)'
