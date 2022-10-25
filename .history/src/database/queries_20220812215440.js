@@ -49,15 +49,3 @@ export const GET_PRODUCT_MATCHES = 'SELECT  '
   + '+ (product.description LIKE ?) '
   + '+ (brand.name LIKE ?) '
   + '+ (reseller.name LIKE ?) ';
-
-
-export const GET_USER = 'SELECT '
-+ 'users.iduser as id, '
-+ 'users.email as email, '
-+ 'users.name as name, '
-+ 'users.lastname as lastname, '
-+ 'users.idGoogle as idGoogle '
-+ 'FROM users where users.idGoogle = ?'
-
-
-export const CREATE_USER = 'INSERT INTO users (iduser, email, name, lastname, idGoogle) VALUES (?,?,?,?,?)'

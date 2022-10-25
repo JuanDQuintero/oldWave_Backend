@@ -17,10 +17,5 @@ app.use(cors({ origin: '*' }));
 // Routes
 app.use('/api/products', productsRoutes);
 app.use('/api/product', productRoutes);
-app.get('/', (req, res)=> {
-    res.json({
-        "OldWave-Backend": "api v1"
-    })
-})
 
 export default app;

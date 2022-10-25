@@ -1,0 +1,14 @@
+FROM node:14
+
+ENV PORT=3000
+ENV HOST=us-cdbr-east-06.cleardb.net
+ENV DB_USER=b39087f2c22ed7
+ENV DB_PORT=3306
+ENV PASSWORD=b3ddbf91
+ENV DATABASE=heroku_ee11c60ceb4552f
+
+WORKDIR /node-app
+COPY package.json .
+RUN npm install
+COPY . .
+CMD npm start
