@@ -6,6 +6,7 @@ import config from './config';
 import productsRoutes from './routes/products.routes';
 import productRoutes from './routes/product.routes';
 import userRoutes from './routes/users.routes'
+import orderRoutes from './routes/orders.routes'
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(cors({ origin: '*' }));
 app.use('/api/products', productsRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
+
 app.get('/', (req, res)=> {
     res.json({
         "OldWave-Backend": "api v1"
