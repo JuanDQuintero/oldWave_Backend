@@ -8,9 +8,9 @@ const createUser = async (req, res) => {
         await connection.query(CREATE_USER, [email,name,lastname, sub])
         res.status(201).json({"CREATED": "El usuario se ha creado correctamente"})
     } catch (error) {
-        const user = await connection.query(GET_USER, [sub, email])
+        const user = await connection.query(GET_USER, [sub])
         console.log(user)
-        res.status(200).json({"success": user})
+        res.status(200).json({"error": "el usuario existe"})
     }
     //console.log(users)
 }

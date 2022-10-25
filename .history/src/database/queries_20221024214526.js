@@ -57,7 +57,7 @@ export const GET_USER = 'SELECT '
 + 'users.name as name, '
 + 'users.lastname as lastname, '
 + 'users.idGoogle as idGoogle '
-+ 'FROM users where users.idGoogle = ? or users.email = ?'
++ 'FROM users where users.idGoogle = ?'
 
 
 export const CREATE_USER = 'INSERT INTO users (email, name, lastname, idGoogle) VALUES (?,?,?,?)'
