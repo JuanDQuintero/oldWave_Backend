@@ -9,7 +9,6 @@ const createUser = async (req, res) => {
         res.status(201).json({"CREATED": "El usuario se ha creado correctamente"})
     } catch (error) {
         const user = await connection.query(GET_USER, [sub, email])
-        console.log(user)
         res.status(200).json({"success": user})
     }
 }
