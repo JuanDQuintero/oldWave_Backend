@@ -71,6 +71,6 @@ export const CREATE_USER = 'INSERT INTO users (email, name, lastname, idGoogle) 
 //Query Order
 export const CREATE_ORDER = 'INSERT INTO orders (idUser, idProduct, quantity, date) VALUES (? , ?, ?, ?)'
 
-export const GET_ORDER_BY_ID = 'SELECT * FROM orders INNER JOIN product p ON orders.idProduct = p.id INNER JOIN reseller r ON orders.idProduct = r.idProduct WHERE orders.idUser = ?'
+export const GET_ORDER_BY_ID = 'SELECT * FROM orders INNER JOIN product p ON orders.idProduct = p.id INNER JOIN reseller r ON p.idReseller = r.id WHERE orders.idUser = ?'
 
 //export const GET_ORDER_BY_USER_ID = 'SELECT * FROM orders where idOrder = ? INNER JOIN user ON orders.idProduct = iduser'

@@ -8,11 +8,20 @@ import {
 
 const createOrder = async (req, res) => {
   const { idUser, idProduct, quantity } = req.body;
+
+  
   try {
+    if (
+      !Array.isArray(idProduct) ||
+      !Array.isArray(quantity) ||
+      idProduct.length !== quantity.length
+    ) {
+      res.status(400).end({ error: "Por favor revisa la peticion enviada" });
+    }
+    let allStock = [];
+    let allProduct = [];
     const connection = await getConnection();
-
     idProduct.forEach(async (product, index) => {
-
       let newStock = 0;
       const stock = await connection.query(GET_STOCK_PRODUCT, [
         idProduct[index],
@@ -20,40 +29,50 @@ const createOrder = async (req, res) => {
 
       if (stock[0].stock > quantity[index]) {
         newStock = stock[0].stock - quantity[index];
-        try {
-            await connection.query(CREATE_ORDER, [
-                idUser,
-              idProduct[index],
-              quantity[index],
-              new Date().toISOString().slice(0, 19).replace('T', ' '),
-            ]);
-            await connection.query(UPDATE_STOCK_PRODUCT, [newStock,idProduct[index]])
-    
-            res.json({ Succes: "Su orden ha sido creada" });
-        } catch (error) {
-            console.log(error)
+        await connection.query(CREATE_ORDER, [
+          idUser,
+          idProduct[index],
+          quantity[index],
+          new Date().toISOString().slice(0, 19).replace("T", " "),
+        ]);
+        await connection.query(UPDATE_STOCK_PRODUCT, [
+          newStock,
+          idProduct[index],
+        ]);
+
+        if (index === idProduct.length - 1) {
+          res.status(201).json({ Succes: "Su orden ha sido creada" });          
         }
+
       } else {
-        res.json({
-          Error:`el producto con id ${idProduct[index]} ha sido superado el stock`,
-          stockActual: stock
-        });
+        allStock.push(stock[0].stock);
+        allProduct.push(idProduct[index]);
+        if (index === idProduct.length - 1) {
+          res.status(400).json({
+            Error: `Los siguientes productos superaron el stock disponible`,
+            stockActual: {
+              stockIndividual: allStock,
+              idProduct: allProduct,
+            },
+          });
+        }
       }
     });
-  } catch (error) {
-    res.json({ Error: "Ha ocurrido un error inesperado" });
+  } catch (e) {
+    res.status(400).json({ Error: "Ha ocurrido un error inesperado" });
   }
 };
 
 const getOrderById = async (req, res) => {
   const { idUser } = req.params;
-  try {
     const connection = await getConnection();
     const order = await connection.query(GET_ORDER_BY_ID, [idUser]);
-    res.status(200).json({ success: order });
-  } catch (error) {
-    res.status(400).json({ Error: "Ha ocurrido un error inesperado" });
-  }
+    if (order.length > 0) {
+      res.status(200).json({ success: order });
+    } else {
+      res.status(404).json({notFound: "No se ha encontrado informacion con el id ingresado"});
+
+    }
 };
 
 export default {
