@@ -1,6 +1,6 @@
 import getConnection from '../database/database';
 import {
-  GET_PRODUCT, GET_PRODUCTS, GET_PRODUCT_IMGS, GET_PRODUCT_MATCHES,
+  GET_PRODUCT, GET_PRODUCTS, GET_PRODUCT_IMGS, GET_PRODUCT_MATCHES, GET_RANDOM_PRODUCT
 } from '../database/queries';
 
 const getProducts = async (req, res) => {
@@ -8,6 +8,12 @@ const getProducts = async (req, res) => {
   const products = await connection.query(GET_PRODUCTS);
   res.json(products);
 };
+
+const getRecentProducts = async (req, res) => {
+  const connection = await getConnection();
+  const products = await connection.query(GET_RANDOM_PRODUCT)
+  res.status(200).json(products)
+}
 
 const getProduct = async (req, res) => {
   const { id } = req.params;
@@ -40,4 +46,5 @@ export default {
   getProducts,
   getProduct,
   matchProduct,
+  getRecentProducts
 };
