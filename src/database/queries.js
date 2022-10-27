@@ -73,4 +73,9 @@ export const CREATE_ORDER = 'INSERT INTO orders (idUser, idProduct, quantity, da
 
 export const GET_ORDER_BY_ID = 'SELECT * FROM orders INNER JOIN product p ON orders.idProduct = p.id INNER JOIN reseller r ON p.idReseller = r.id WHERE orders.idUser = ?'
 
+
+//Query filters
+export const GET_ALL_CATEGORIES = 'SELECT * FROM category'
+export const GET_ALL_BRAND = 'SELECT * FROM brand'
+export const GET_ALL_STATE = 'SELECT * FROM state'
 //export const GET_ORDER_BY_USER_ID = 'SELECT * FROM orders where idOrder = ? INNER JOIN user ON orders.idProduct = iduser'
