@@ -71,7 +71,17 @@ export const CREATE_USER = 'INSERT INTO users (email, name, lastname, idGoogle) 
 //Query Order
 export const CREATE_ORDER = 'INSERT INTO orders (idUser, idProduct, quantity, date) VALUES (? , ?, ?, ?)'
 
-export const GET_ORDER_BY_ID = 'SELECT * FROM orders INNER JOIN product p ON orders.idProduct = p.id INNER JOIN reseller r ON p.idReseller = r.id WHERE orders.idUser = ?'
+export const GET_ORDER_BY_ID = 'SELECT '
++ 'p.id as id, '
++ 'p.name as name, '
++ 'p.description as description, '
++ 'p.price as price, '
++ 'p.thumbnail as thumbnail, '
++ 'r.city as city,  '
++ 'r.name as r, '
++ 'r.rating as reseller_rating '
++'FROM orders '
++'INNER JOIN product p ON orders.idProduct = p.id INNER JOIN reseller r ON p.reseller_id = r.id WHERE orders.idUser = ?'
 
 
 //Query filters
