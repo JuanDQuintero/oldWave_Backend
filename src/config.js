@@ -3,11 +3,11 @@ import { config } from 'dotenv';
 config();
 
 export default {
-  port: process.env.PORT || '3306',
+  port: process.env.PORT || '',
   db: {
-    host: process.env.HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.PASSWORD || 'root',
-    database: process.env.DATABASE || 'oldwave',
+    host: process.env.HOST || '',
+    user: process.env.DB_USER || '',
+    password: process.env.PASSWORD || '',
+    database: process.env.DATABASE || '',
   },
 };
