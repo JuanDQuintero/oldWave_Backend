@@ -46,6 +46,8 @@ describe('Product', () => {
               reseller_logo: expect.any(String),
               reseller_rating: expect.any(Number),
               imgs: expect.any(Array),
+              stock: expect.any(Number),
+              state: expect.any(String)
             }),
           );
         }));
@@ -94,6 +96,7 @@ describe('Product', () => {
                 city: expect.any(String),
                 reseller: expect.any(String),
                 reseller_rating: expect.any(Number),
+                stock: expect.any(Number)
               }),
             );
           }));

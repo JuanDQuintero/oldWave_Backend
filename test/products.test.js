@@ -27,6 +27,8 @@ describe('Products', () => {
                 city: expect.any(String),
                 reseller: expect.any(String),
                 reseller_rating: expect.any(Number),
+                stock: expect.any(Number),
+                state: expect.any(String)
               }),
             );
           }));
