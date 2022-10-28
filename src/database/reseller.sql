@@ -1,1 +1,0 @@
-SELECT * FROM heroku_ee11c60ceb4552f.reseller;
