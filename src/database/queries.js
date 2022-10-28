@@ -76,7 +76,7 @@ export const GET_RANDOM_PRODUCT = 'SELECT  '
 + 'FROM product INNER JOIN brand  '
 + 'ON product.brand_id = brand.id INNER JOIN '
 + 'reseller ON product.reseller_id = reseller.id '
-+ 'ORDER BY RAND() LIMIT 2;'
++ 'ORDER BY RAND() LIMIT 10;'
 
 
 //Querys User
