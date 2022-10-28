@@ -38,7 +38,7 @@ const matchProduct = async (req, res) => {
   const { query } = req.query;
   const regex = `%${query}%`;
   const connection = await getConnection();
-  const products = await connection.query(GET_PRODUCT_MATCHES, [regex, regex, regex, regex]);
+  const products = await connection.query(GET_PRODUCT_MATCHES, [regex, regex, regex, regex, regex]);
   res.json(products);
 };
 
