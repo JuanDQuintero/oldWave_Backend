@@ -9,7 +9,6 @@ const getAllFilters = async(req, res) => {
         const categories = await connection.query(GET_ALL_CATEGORIES);
         const brand = await connection.query(GET_ALL_BRAND)
         const state = await connection.query(GET_ALL_STATE)
-    
         res.status(200).json({category: categories, brand, state})
         
     } catch (e) {
@@ -21,6 +20,7 @@ const getProductsByCategory = async (req, res) => {
     try {
         const {category} = req.params
         const connection = await getConnection();
+        console.log(category)
         const categories = await connection.query(GET_CATEGORY_BY_NAME, [category])
         res.status(200).json(categories)
 

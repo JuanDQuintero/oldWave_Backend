@@ -115,7 +115,7 @@ export const GET_ALL_CATEGORIES = 'SELECT * FROM category;'
 export const GET_ALL_BRAND = 'SELECT * FROM brand;'
 export const GET_ALL_STATE = 'SELECT * FROM state;'
 
-export const GET_CATEGORY_BY_NAME = 'SELECT * FROM oldwave.category WHERE LOWER(`name`) LIKE LOWER("%?%")'
+export const GET_CATEGORY_BY_NAME = 'SELECT * FROM oldwave.category WHERE category.id = ?'
 
 export const GET_ONE_CATEGORY = 'SELECT  '
 + 'product.id as id, '
