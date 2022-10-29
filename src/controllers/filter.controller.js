@@ -20,7 +20,6 @@ const getProductsByCategory = async (req, res) => {
     try {
         const {category} = req.params
         const connection = await getConnection();
-        console.log(category)
         const categories = await connection.query(GET_CATEGORY_BY_NAME, [category])
         res.status(200).json(categories)
 
