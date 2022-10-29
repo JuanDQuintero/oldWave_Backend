@@ -1,68 +1,13 @@
 import getConnection from "../database/database";
-import NodeMailer from "nodemailer";
 import {
   GET_ORDER_BY_ID,
   GET_STOCK_PRODUCT,
   UPDATE_STOCK_PRODUCT,
   CREATE_ORDER,
-  GET_USER,
+  GET_PRODUCT,
+  GET_USER_BY_ID
 } from "../database/queries";
-
-
-const plantilla = "<p>&nbsp;</p>"
-+"<h3 style='text-align: center; color: #7444fb; font-size: 3rem;'>Recibo&nbsp;</h3>"
-+"<p><strong>Saludos, acontinuacion vera un resumen de la compra que acaba de realizar</strong></p>"
-+"<table style='height: 54px; width: 100%; border-collapse: collapse;'border='1'>"
-+"<tbody>"
-+"<tr style='width: 33.3333%; height: 18px;'>"
-+"<td style='width: 33.3333%; height: 18px;'>Producto 1</td>"
-+"<td style='width: 33.3333%; height: 18px; text-align: left;;'>x10</td>"
-+"<td style='width: 33.3333%; height: 18px;'>$100.000</td>"
-+"</tr>"
-+"<tr style='width: 33.3333%; height: 18px;'>"
-+"<td style='width: 33.3333%; height: 18px;'>Producto 2</td>"
-+"<td style='width: 33.3333%; height: 18px; text-align: left;'>x1</td>"
-+"<td style='width: 33.3333%; height: 18px;'>$200.000</td>"
-+"</tr>"
-+"<tr style='height: 18px;'>"
-+"<td style='width: 33.3333%; height: 18px;'></td>"
-+"<td style='width: 33.3333%; height: 18px;'>Total</td>"
-+"<td style='width: 33.3333%; height: 18px;'>$300.000</td>"
-+"</tr>"
-+"</tbody>"
-+"</table>"
-+"<p></p>"
-+"<p><img src='http://placekitten.com/200/300' alt='Logo' width='117' height='176' style='display: block; margin-left: auto; margin-right: auto;' /></p>"
-+"<p>&nbsp;</p>"
-+"<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Para dudas comuniquese al correo test@test.com</p>"
-
-const sendEmail = async () => {
-  const transporter = NodeMailer.createTransport({
-    service: process.env.HOST_SMTP,
-    auth: {
-      user: process.env.USER_SMTP,
-      pass: process.env.PASSWORD_STMP,
-    },
-  });
-
-  console.log("Usuario: "+process.env.USER_SMTP+" Contrasna: "+ process.env.PASSWORD_STMP)
-
-
-  await transporter.sendMail({
-    from: '"Fred Foo 👻" loscarr18@example.com', // sender address
-    to: "carlosquiros12@gmail.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: plantilla, // html body
-  }, function (err, data) {
-    if (err) {
-      console.log("Error Occurs", err);
-    } else {
-      console.log("Email sent successfully");
-    }
-  });
-
-};
+import { sendEmail } from "../utils/sendEmail";
 
 const createOrder = async (req, res) => {
   const { idUser, idProduct, quantity } = req.body;
@@ -77,13 +22,18 @@ const createOrder = async (req, res) => {
     }
     let allStock = [];
     let allProduct = [];
+    let dataToSendEmail = [];
     const connection = await getConnection();
-    //const user = await connection.query(GET_USER, [idUser]);
+    
+    
     idProduct.forEach(async (product, index) => {
       let newStock = 0;
+      const productData = await connection.query(GET_PRODUCT, [idProduct[index]]);
       const stock = await connection.query(GET_STOCK_PRODUCT, [
         idProduct[index],
       ]);
+
+      dataToSendEmail.push({name: productData[0].name, price: productData[0].price, quantity: quantity[index]})
 
       if (stock[0].stock > quantity[index]) {
         newStock = stock[0].stock - quantity[index];
@@ -99,6 +49,9 @@ const createOrder = async (req, res) => {
         ]);
 
         if (index === idProduct.length - 1) {
+          const userSendMail = await connection.query(GET_USER_BY_ID, [idUser])
+          
+          await sendEmail(dataToSendEmail, userSendMail[0].email)
           res.status(201).json({ Succes: "Su orden ha sido creada" });
         }
       } else {

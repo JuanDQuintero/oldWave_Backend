@@ -91,6 +91,14 @@ export const GET_USER = 'SELECT '
 + 'users.idGoogle as idGoogle '
 + 'FROM users where users.idGoogle = ? or users.email = ?;'
 
+export const GET_USER_BY_ID = 'SELECT '
++ 'users.iduser as id, '
++ 'users.email as email, '
++ 'users.name as name, '
++ 'users.lastname as lastname, '
++ 'users.idGoogle as idGoogle '
++ 'FROM users where users.idGoogle = ?;'
+
 export const CREATE_USER = 'INSERT INTO users (email, name, lastname, idGoogle) VALUES (? ,? ,? ,? );'
 
 
