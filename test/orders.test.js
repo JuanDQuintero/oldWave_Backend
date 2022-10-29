@@ -68,7 +68,7 @@ describe("Orders", () => {
   describe("Get order", () => {
     test('Get orden by user', async() => {
         return await request(app)
-        .get('/api/orders/1')
+        .get('/api/orders/115935823242818316311')
         .then((response) => {
             expect(response.statusCode).toBe(200)
         })
