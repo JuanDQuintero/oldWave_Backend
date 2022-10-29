@@ -35,7 +35,7 @@ describe("User", () => {
         .post("/api/users/")
         .send(newUser)
         .then((response) => {
-          expect(response.statusCode).toBe(201);
+          expect(response.statusCode).toBe(200);
         });
     });
   });
