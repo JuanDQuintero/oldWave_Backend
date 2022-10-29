@@ -78,7 +78,7 @@ const createOrder = async (req, res) => {
     let allStock = [];
     let allProduct = [];
     const connection = await getConnection();
-    const user = await connection.query(GET_USER, [idUser]);
+    //const user = await connection.query(GET_USER, [idUser]);
     idProduct.forEach(async (product, index) => {
       let newStock = 0;
       const stock = await connection.query(GET_STOCK_PRODUCT, [

@@ -51,9 +51,9 @@ describe("Orders", () => {
   describe("Succes create order", () => {
     test("Order success", async () => {
       const newOrder = {
-        idProduct: [1, 2],
-        idUser: 1,
-        quantity: [1, 2]
+        idProduct: [13, 18],
+        idUser: "115935823242818316311",
+        quantity: [1, 1]
       };
 
       return await request(app)
