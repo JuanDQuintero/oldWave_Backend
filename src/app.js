@@ -26,7 +26,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/filter', filtrRoutes);
 
 app.get('/', (req, res)=> {
-    res.json({
+    res.status(200).json({
         "OldWave-Backend": "api v1"
     })
 })
