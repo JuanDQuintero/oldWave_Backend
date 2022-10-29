@@ -20,7 +20,7 @@ describe("Filters", () => {
     });
   });
 
-  describe("Get category by id", () => {
+  /* describe("Get category by id", () => {
     test("Response category", async () => {
         return await request(app)
         .get("/api/filter/1")
@@ -35,7 +35,7 @@ describe("Filters", () => {
           );
         });
     })
-  })
+  }) */
 });
 
 afterAll(async () => {
