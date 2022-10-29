@@ -16,7 +16,7 @@ const getAllFilters = async(req, res) => {
     }
 }
 
-const getProductsByCategory = async (req, res) => {
+/* const getProductsByCategory = async (req, res) => {
     try {
         const {category} = req.params
         const connection = await getConnection();
@@ -27,10 +27,10 @@ const getProductsByCategory = async (req, res) => {
         res.status(400).end({error: "Por favor revise su sintaxis"})
     }
 }
-
+ */
 
 export default {
     getAllFilters,
-    getProductsByCategory
+    /* getProductsByCategory */
   };
   
