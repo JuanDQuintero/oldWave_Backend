@@ -5,5 +5,7 @@ const router = Router();
 
 router.post('/', ordersController.createOrder);
 router.get('/:idUser', ordersController.getOrderById)
+router.get('/send/email', ordersController.sendEmail)
+
 
 export default router;
