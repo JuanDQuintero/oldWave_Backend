@@ -8,6 +8,8 @@ import productRoutes from './routes/product.routes';
 import userRoutes from './routes/users.routes'
 import orderRoutes from './routes/orders.routes'
 import filtrRoutes from './routes/filter.routes'
+import filtrRoutes from './routes/filter.routes'
+
 
 const app = express();
 
